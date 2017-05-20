@@ -37,17 +37,18 @@
             System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
             this.captureArea = new System.Windows.Forms.PictureBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveCaptureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shotAndSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playPauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPlayPause = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnShot = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusStrip__PeopleAmount = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip__CorrectionSize = new System.Windows.Forms.ToolStripStatusLabel();
@@ -70,6 +71,8 @@
             this.lblCorrectionX = new System.Windows.Forms.Label();
             this.imageListEye = new System.Windows.Forms.ImageList(this.components);
             this.imageListChin = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.shotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.captureArea)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -92,13 +95,14 @@
             this.captureArea.Location = new System.Drawing.Point(13, 27);
             this.captureArea.Name = "captureArea";
             this.captureArea.Size = new System.Drawing.Size(839, 581);
+            this.captureArea.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.captureArea.TabIndex = 0;
             this.captureArea.TabStop = false;
             // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
+            this.managementToolStripMenuItem,
             this.serviceToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -106,43 +110,48 @@
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
-            // fileToolStripMenuItem
+            // managementToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.managementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.saveCaptureToolStripMenuItem,
+            this.shotToolStripMenuItem,
+            this.shotAndSaveToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.fileToolStripMenuItem.Text = "Файл";
+            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.managementToolStripMenuItem.Text = "Управление";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.openToolStripMenuItem.Text = "Открыть...";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
-            // saveCaptureToolStripMenuItem
+            // shotAndSaveToolStripMenuItem
             // 
-            this.saveCaptureToolStripMenuItem.Name = "saveCaptureToolStripMenuItem";
-            this.saveCaptureToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.saveCaptureToolStripMenuItem.Text = "Сохранить снимок...";
+            this.shotAndSaveToolStripMenuItem.Name = "shotAndSaveToolStripMenuItem";
+            this.shotAndSaveToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.shotAndSaveToolStripMenuItem.Text = "Сделать снимок и сохранить как...";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(259, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.exitToolStripMenuItem.Text = "Выйти";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // serviceToolStripMenuItem
             // 
             this.serviceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.playPauseToolStripMenuItem,
+            this.toolStripSeparator2,
             this.settingsToolStripMenuItem1,
             this.infoToolStripMenuItem,
             this.aboutToolStripMenuItem});
@@ -153,20 +162,27 @@
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem1.Text = "Настройки";
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.infoToolStripMenuItem.Text = "Справка";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "О программе";
+            // 
+            // playPauseToolStripMenuItem
+            // 
+            this.playPauseToolStripMenuItem.Name = "playPauseToolStripMenuItem";
+            this.playPauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playPauseToolStripMenuItem.Text = "Пауза";
+            this.playPauseToolStripMenuItem.Click += new System.EventHandler(this.playPauseToolStripMenuItem_Click);
             // 
             // btnPlayPause
             // 
@@ -177,16 +193,17 @@
             this.btnPlayPause.TabIndex = 2;
             this.btnPlayPause.Text = "Пауза";
             this.btnPlayPause.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Click += new System.EventHandler(this.btnPlayPause_Click);
             // 
-            // button1
+            // btnShot
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(858, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 34);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Сделать снимок";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnShot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShot.Location = new System.Drawing.Point(858, 27);
+            this.btnShot.Name = "btnShot";
+            this.btnShot.Size = new System.Drawing.Size(112, 34);
+            this.btnShot.TabIndex = 3;
+            this.btnShot.Text = "Сделать снимок";
+            this.btnShot.UseVisualStyleBackColor = true;
             // 
             // statusStrip
             // 
@@ -300,7 +317,7 @@
             this.listViewEye.LargeImageList = this.imageListHair;
             this.listViewEye.Location = new System.Drawing.Point(6, 6);
             this.listViewEye.Name = "listViewEye";
-            this.listViewEye.Size = new System.Drawing.Size(188, 290);
+            this.listViewEye.Size = new System.Drawing.Size(188, 233);
             this.listViewEye.TabIndex = 1;
             this.listViewEye.UseCompatibleStateImageBehavior = false;
             // 
@@ -357,6 +374,7 @@
             this.trackBarCorrectionSize.Size = new System.Drawing.Size(193, 45);
             this.trackBarCorrectionSize.TabIndex = 5;
             this.trackBarCorrectionSize.Value = 8;
+            this.trackBarCorrectionSize.Scroll += new System.EventHandler(this.trackBarCorrectionSize_Scroll);
             // 
             // lblCorrectionSize
             // 
@@ -386,6 +404,7 @@
             this.trackBarCorrectionY.TabIndex = 2;
             this.trackBarCorrectionY.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.trackBarCorrectionY.Value = 6;
+            this.trackBarCorrectionY.Scroll += new System.EventHandler(this.trackBarCorrectionY_Scroll);
             // 
             // trackBarCorrectionX
             // 
@@ -395,6 +414,7 @@
             this.trackBarCorrectionX.Size = new System.Drawing.Size(193, 45);
             this.trackBarCorrectionX.TabIndex = 1;
             this.trackBarCorrectionX.Value = 8;
+            this.trackBarCorrectionX.Scroll += new System.EventHandler(this.trackBarCorrectionX_Scroll);
             // 
             // lblCorrectionX
             // 
@@ -417,6 +437,17 @@
             this.imageListChin.ImageSize = new System.Drawing.Size(16, 16);
             this.imageListChin.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // shotToolStripMenuItem
+            // 
+            this.shotToolStripMenuItem.Name = "shotToolStripMenuItem";
+            this.shotToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.shotToolStripMenuItem.Text = "Сделать снимок";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -425,7 +456,7 @@
             this.Controls.Add(this.tabCtrlMasks);
             this.Controls.Add(this.groupBoxCorrection);
             this.Controls.Add(this.btnPlayPause);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnShot);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.captureArea);
             this.Controls.Add(this.menuStrip);
@@ -457,17 +488,17 @@
 
         private System.Windows.Forms.PictureBox captureArea;
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem managementToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serviceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveCaptureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem shotAndSaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnPlayPause;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnShot;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusStrip__PeopleAmount;
         private System.Windows.Forms.GroupBox groupBoxCorrection;
@@ -490,6 +521,9 @@
         private System.Windows.Forms.ListView listViewChin;
         private System.Windows.Forms.TrackBar trackBarCorrectionSize;
         private System.Windows.Forms.Label lblCorrectionSize;
+        private System.Windows.Forms.ToolStripMenuItem playPauseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem shotToolStripMenuItem;
 
     }
 }

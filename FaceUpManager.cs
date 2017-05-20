@@ -18,13 +18,13 @@ namespace FaceUp
     class FaceUpManager
     {
         //возвращает лист путей к маскам из папки или битмапы, еще не известно
-        public List<string> GetMasks ( string maskType )
+        public List<string> GetMaskPathsOf ( string maskType )
         {
             return new List<string>();
         }
         
-        //обрабатывает фрейм с веб-камеры и возвращает рисунок
-        public Bitmap GetProcessedFrame ()
+        //обрабатывает фрейм и возвращает новый рисунок на вывод
+        public Bitmap DrawProcessedFrame ()
         {
             return new Bitmap("");
         }

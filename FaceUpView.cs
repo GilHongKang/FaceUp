@@ -11,42 +11,78 @@ namespace FaceUp
     //Фронтенд
     partial class MainForm
     {
+        public bool isCapturing = false;
+
         private FaceUpManager mgr = new FaceUpManager();
 
-        private void StartCaptureProcess ()
+        public void ToggleCaptureProcess ()
         {
-            Application.Idle -= ProcessFrame;
+            if (isCapturing)
+            {
+                StartCaptureProcess();
+            }
+            else
+            {
+                StopCaptureProcess();
+            }
         }
 
-        private void StopCaptureProcess ()
+        public void StartCaptureProcess ()
+        {
+            Application.Idle -= ProcessFrame;
+            isCapturing = true;
+
+            btnPlayPause.Text = "Пауза";
+            playPauseToolStripMenuItem.Text = "Пауза";
+        }
+
+        public void StopCaptureProcess ()
         {
             Application.Idle += ProcessFrame;
+            isCapturing = false;
+
+            btnPlayPause.Text = "Возобновить";
+            playPauseToolStripMenuItem.Text = "Возобновить";
         }
 
         private void ProcessFrame ( object sender, EventArgs arg )
         {
-            captureArea.Image = mgr.GetProcessedFrame();
+            try
+            {
+                captureArea.Image = mgr.DrawProcessedFrame();
+            }
+            catch ( Exception )
+            {
+                MessageBox.Show( "Ошибка подключения веб-камеры" );
+            }
         }
 
-        private void LoadMasks ()
+        public void LoadMaskImages ()
         {
-            List<string> hairMasks = mgr.GetMasks( "hair" );
-            List<string> eyeMasks = mgr.GetMasks( "eye" );
-            List<string> chinMasks = mgr.GetMasks( "chin" );
-
-            foreach ( var mask in hairMasks )
+            try 
             {
-                //заполнение листа
+                List<string> hairMasks = mgr.GetMaskPathsOf( "hair" );
+                List<string> eyeMasks = mgr.GetMaskPathsOf( "eye" );
+                List<string> chinMasks = mgr.GetMaskPathsOf( "chin" );
+
+                foreach (var mask in hairMasks)
+                {
+                    //заполнение листа
+                }
+
+                foreach (var mask in eyeMasks)
+                {
+                    //заполнение листа
+                }
+
+                foreach (var mask in chinMasks)
+                {
+                    //заполнение листа
+                }
             }
-
-            foreach ( var mask in eyeMasks )
+            catch ( Exception )
             {
-                //заполнение листа
-            }
-
-            foreach ( var mask in chinMasks )
-            {
-                //заполнение листа
+                MessageBox.Show( "Ошибка загрузки масок" );
             }
         }
     }

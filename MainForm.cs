@@ -15,10 +15,48 @@ namespace FaceUp
         {
             InitializeComponent();
 
-            LoadMasks();
+            LoadMaskImages();
             StartCaptureProcess();
         }
 
+        //Обработчики кнопок сайдбара
+        private void btnPlayPause_Click ( object sender, EventArgs e )
+        {
+            ToggleCaptureProcess();
+        }
 
+        private void playPauseToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            ToggleCaptureProcess();
+        }
+
+        //Обработчики корректировки
+        private void trackBarCorrectionSize_Scroll ( object sender, EventArgs e )
+        {
+
+        }
+
+        private void trackBarCorrectionX_Scroll ( object sender, EventArgs e )
+        {
+
+        }
+
+        private void trackBarCorrectionY_Scroll ( object sender, EventArgs e )
+        {
+
+        }
+
+        //Обработчики меню
+        private void openToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            Application.Exit();
+        }
+
+        
     }
 }
