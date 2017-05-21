@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace FaceUp
 {
@@ -62,11 +64,14 @@ namespace FaceUp
             playPauseToolStripMenuItem.Text = "Возобновить";
         }
 
+        private VideoCapture captureDevice = new VideoCapture(); // web camera
+
         private void ProcessFrame ( object sender, EventArgs arg )
         {
             try
             {
-                captureArea.Image = mgr.DrawProcessedFrame();
+                Image<Bgr, byte> img = captureDevice.QueryFrame().ToImage<Bgr, byte>();
+                captureArea.Image = mgr.DrawProcessedFrame(ref img);
             }
             catch ( Exception )
             {
@@ -75,33 +80,62 @@ namespace FaceUp
             }
         }
 
-        public void LoadMaskImages ()
+        public void LoadMaskImages (string applicationPath)
         {
-            try 
+            try
             {
-                List<string> hairMasks = mgr.GetMaskPathsOf( "hair" );
-                List<string> eyeMasks = mgr.GetMaskPathsOf( "eye" );
-                List<string> chinMasks = mgr.GetMaskPathsOf( "chin" );
+                if(!mgr.LoadImages(applicationPath))
+                    throw new Exception("Images not found");
 
-                foreach (var mask in hairMasks)
+                List<FaceUpManager.Picture> eyeMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.EYE),
+                    chinMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.CHIN),
+                    hairMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.HAIR);
+
+                /*
+                var hairMask = hairMasks[0];
+                hairMask.ChangePositionOffsets(-10, 10);
+                hairMask.ChangeSizeOffsets(20, 100);
+                hairMask.GetPositionOffsets();
+                hairMask.GetSizeOffsets();
+                */
+
+                /*
+               // mgr.currentMasks.SetHair(hairMasks[0]);
+                mgr.currentMasks.SetEye(eyeMasks[0]);
+                mgr.currentMasks.SetChin(chinMasks[0]);
+                */
+
+                for (int i = 0; i < hairMasks.Count; i++)
                 {
-                    //заполнение листа
+                    imageListHair.Images.Add(hairMasks[0].source);
+                    listViewHair.Items.Add("", i);
                 }
 
-                foreach (var mask in eyeMasks)
+                for (int i = 0; i < eyeMasks.Count; i++)
                 {
-                    //заполнение листа
+                    imageListEye.Images.Add(eyeMasks[i].source);
+                    listViewEye.Items.Add("", i);
                 }
 
-                foreach (var mask in chinMasks)
+                for (int i = 0; i < chinMasks.Count; i++)
                 {
-                    //заполнение листа
+                    imageListChin.Images.Add(chinMasks[i].source);
+                    listViewChin.Items.Add("", i);
                 }
+
+                /*
+                 * размер картинок можно поменять так, больше способов не знаю
+                imageListChin.ImageSize = new Size(100,100);
+                imageListEye.ImageSize = new Size(100, 100);
+                imageListHair.ImageSize = new Size(100, 100);
+                */
+               
             }
-            catch ( Exception )
+            catch (Exception)
             {
-                MessageBox.Show( "Ошибка загрузки масок" );
+                MessageBox.Show("Ошибка загрузки масок");
             }
         }
     }
+
 }

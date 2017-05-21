@@ -11,11 +11,12 @@ namespace FaceUp
 {
     public partial class MainForm : Form
     {
+
         public MainForm ()
         {
             InitializeComponent();
 
-            LoadMaskImages();
+            LoadMaskImages(Application.StartupPath);
             StartCaptureProcess();
         }
 

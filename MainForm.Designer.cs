@@ -327,7 +327,7 @@
             this.listViewEye.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem3,
             listViewItem4});
-            this.listViewEye.LargeImageList = this.imageListHair;
+            this.listViewEye.LargeImageList = this.imageListEye;
             this.listViewEye.Location = new System.Drawing.Point(6, 6);
             this.listViewEye.Name = "listViewEye";
             this.listViewEye.Size = new System.Drawing.Size(188, 233);
@@ -356,7 +356,7 @@
             this.listViewChin.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem5,
             listViewItem6});
-            this.listViewChin.LargeImageList = this.imageListHair;
+            this.listViewChin.LargeImageList = this.imageListChin;
             this.listViewChin.Location = new System.Drawing.Point(6, 6);
             this.listViewChin.Name = "listViewChin";
             this.listViewChin.Size = new System.Drawing.Size(188, 232);
