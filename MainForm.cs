@@ -32,18 +32,17 @@ namespace FaceUp
         //Обработчики корректировки
         private void trackBarCorrectionSize_Scroll ( object sender, EventArgs e )
         {
-            
-
+            CorrectMaskSize( activeMaskType, trackBarCorrectionSize.Value );
         }
 
         private void trackBarCorrectionX_Scroll ( object sender, EventArgs e )
         {
-
+            CorrectMaskX( activeMaskType, trackBarCorrectionX.Value );
         }
 
         private void trackBarCorrectionY_Scroll ( object sender, EventArgs e )
         {
-
+            CorrectMaskX( activeMaskType, trackBarCorrectionY.Value );
         }
 
         //Обработчики меню
@@ -66,6 +65,21 @@ namespace FaceUp
         {
             AboutForm aboutForm = new AboutForm();
             aboutForm.Show();
+        }
+
+        private void listViewHair_SelectedIndexChanged ( object sender, EventArgs e )
+        {
+            SelectMask( MaskType.HAIR );
+        }
+
+        private void listViewEye_SelectedIndexChanged ( object sender, EventArgs e )
+        {
+            SelectMask( MaskType.EYE );
+        }
+
+        private void listViewChin_SelectedIndexChanged ( object sender, EventArgs e )
+        {
+            SelectMask( MaskType.CHIN );
         }
 
 

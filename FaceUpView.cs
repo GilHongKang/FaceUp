@@ -14,11 +14,12 @@ namespace FaceUp
     partial class MainForm
     {
         public bool isCapturing = false;
+        public ListViewItem activeMaskItem;
         public MaskType activeMaskType
         {
             get
             {
-                switch (tabCtrlMasks.SelectedTab.Text)
+                switch ( tabCtrlMasks.SelectedTab.Text )
                 {
                     case "Волосы":
                         return MaskType.HAIR;
@@ -33,6 +34,9 @@ namespace FaceUp
         }
 
         private FaceUpManager mgr = new FaceUpManager();
+        private List<FaceUpManager.Picture> hairMasks;
+        private List<FaceUpManager.Picture> eyeMasks;
+        private List<FaceUpManager.Picture> chinMasks;
 
         public void ToggleCaptureProcess ()
         {
@@ -64,14 +68,11 @@ namespace FaceUp
             playPauseToolStripMenuItem.Text = "Возобновить";
         }
 
-        private VideoCapture captureDevice = new VideoCapture(); // web camera
-
         private void ProcessFrame ( object sender, EventArgs arg )
         {
             try
             {
-                Image<Bgr, byte> img = captureDevice.QueryFrame().ToImage<Bgr, byte>();
-                captureArea.Image = mgr.DrawProcessedFrame( ref img );
+                captureArea.Image = mgr.DrawProcessedFrame();
             }
             catch (Exception)
             {
@@ -84,13 +85,93 @@ namespace FaceUp
         {
             try
             {
-                if (!mgr.LoadImages( applicationPath ))
-                    throw new Exception( "Images not found" );
+                if (!mgr.LoadImages( applicationPath )) throw new Exception( "Изображения не найдены" );
 
-                List<FaceUpManager.Picture> eyeMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.EYE ),
-                    chinMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.CHIN ),
-                    hairMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.HAIR );
+                eyeMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.EYE );
+                chinMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.CHIN );
+                hairMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.HAIR );
 
+                hairMasks.Select( image => new { image.source, image.id } )
+                    .ToList().ForEach( obj =>
+                    {
+                        ListViewItem item = new ListViewItem();
+                        item.Tag = obj.id;
+                        imageListHair.Images.Add( obj.source );
+                        item.ImageIndex = imageListHair.Images.Count - 1;
+                        listViewHair.Items.Add( item );
+                    } );
+
+                eyeMasks.Select( image => new { image.source, image.id } )
+                    .ToList().ForEach( obj =>
+                    {
+                        ListViewItem item = new ListViewItem();
+                        item.Tag = obj.id;
+                        imageListEye.Images.Add( obj.source );
+                        item.ImageIndex = imageListEye.Images.Count - 1;
+                        listViewEye.Items.Add( item );
+                    } );
+
+                chinMasks.Select( image => new { image.source, image.id } )
+                    .ToList().ForEach( obj =>
+                    {
+                        ListViewItem item = new ListViewItem();
+                        item.Tag = obj.id;
+                        imageListChin.Images.Add( obj.source );
+                        item.ImageIndex = imageListChin.Images.Count - 1;
+                        listViewChin.Items.Add( item );
+                    } );
+            }
+            catch ( Exception )
+            {
+                MessageBox.Show( "Ошибка загрузки масок" );
+            }
+        }
+
+        public void SelectMask ( MaskType maskType )
+        {
+
+            switch ( maskType )
+            {
+                case MaskType.HAIR:
+                    activeMaskItem = listViewHair.SelectedItems[0];
+                    break;
+                case MaskType.EYE:
+                    activeMaskItem = listViewEye.SelectedItems[0];
+                    break;
+                case MaskType.CHIN:
+                    activeMaskItem = listViewChin.SelectedItems[0];
+                    break;
+                default:
+                    return;
+            }
+
+            int id = int.Parse( activeMaskItem.Tag.ToString() );
+
+            FaceUpManager.Picture picture = mgr.GetMaskById( id );
+
+            switch (maskType)
+            {
+                case MaskType.HAIR:
+                    mgr.currentMasks.SetHair( picture );
+                    break;
+                case MaskType.EYE:
+                    mgr.currentMasks.SetEye( picture );
+                    break;
+                case MaskType.CHIN:
+                    mgr.currentMasks.SetChin( picture );
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        public void CorrectMaskSize ( MaskType maskType, int size )
+        {
+
+        }
+
+        public void CorrectMaskX ( MaskType maskType, int offsetX ) 
+        {
                 /*
                 var hairMask = hairMasks[0];
                 hairMask.ChangePositionOffsets(-10, 10);
@@ -100,54 +181,17 @@ namespace FaceUp
                 */
 
                 /*
-               // mgr.currentMasks.SetHair(hairMasks[0]);
-                mgr.currentMasks.SetEye(eyeMasks[0]);
-                mgr.currentMasks.SetChin(chinMasks[0]);
-                */
-
-                for (int i = 0; i < hairMasks.Count; i++)
-                {
-                    imageListHair.Images.Add( hairMasks[0].source );
-                    listViewHair.Items.Add( "", i );
-                }
-
-                for (int i = 0; i < eyeMasks.Count; i++)
-                {
-                    imageListEye.Images.Add( eyeMasks[i].source );
-                    listViewEye.Items.Add( "", i );
-                }
-
-                for (int i = 0; i < chinMasks.Count; i++)
-                {
-                    imageListChin.Images.Add( chinMasks[i].source );
-                    listViewChin.Items.Add( "", i );
-                }
-
-                /*
-                 * размер картинок можно поменять так, больше способов не знаю
+                размер картинок можно поменять так, больше способов не знаю
                 imageListChin.ImageSize = new Size(100,100);
                 imageListEye.ImageSize = new Size(100, 100);
                 imageListHair.ImageSize = new Size(100, 100);
                 */
-
-            }
-            catch (Exception)
-            {
-                MessageBox.Show( "Ошибка загрузки масок" );
-            }
         }
 
-        //private void InitializeComponent ()
-        //{
-        //    this.SuspendLayout();
-        //    // 
-        //    // MainForm
-        //    // 
-        //    this.ClientSize = new System.Drawing.Size(284, 261);
-        //    this.Name = "MainForm";
-        //    this.ResumeLayout(false);
-
-        //}
+        public void CorrectMaskY ( MaskType maskType, int offsetY )
+        {
+            
+        }
     }
 
 }

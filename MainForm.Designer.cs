@@ -29,12 +29,6 @@
         private void InitializeComponent ()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.captureArea = new System.Windows.Forms.PictureBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -63,8 +57,10 @@
             this.imageListHair = new System.Windows.Forms.ImageList(this.components);
             this.tabMasks__Eye = new System.Windows.Forms.TabPage();
             this.listViewEye = new System.Windows.Forms.ListView();
+            this.imageListEye = new System.Windows.Forms.ImageList(this.components);
             this.tabMasks__Chin = new System.Windows.Forms.TabPage();
             this.listViewChin = new System.Windows.Forms.ListView();
+            this.imageListChin = new System.Windows.Forms.ImageList(this.components);
             this.groupBoxCorrection = new System.Windows.Forms.GroupBox();
             this.trackBarCorrectionSize = new System.Windows.Forms.TrackBar();
             this.lblCorrectionSize = new System.Windows.Forms.Label();
@@ -72,8 +68,6 @@
             this.trackBarCorrectionY = new System.Windows.Forms.TrackBar();
             this.trackBarCorrectionX = new System.Windows.Forms.TrackBar();
             this.lblCorrectionX = new System.Windows.Forms.Label();
-            this.imageListEye = new System.Windows.Forms.ImageList(this.components);
-            this.imageListChin = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.captureArea)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -169,31 +163,31 @@
             // playPauseToolStripMenuItem
             // 
             this.playPauseToolStripMenuItem.Name = "playPauseToolStripMenuItem";
-            this.playPauseToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.playPauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.playPauseToolStripMenuItem.Text = "Пауза";
             this.playPauseToolStripMenuItem.Click += new System.EventHandler(this.playPauseToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem1.Text = "Настройки";
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.infoToolStripMenuItem.Text = "Справка";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -286,22 +280,18 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewHair.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            this.listViewHair.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
             this.listViewHair.LargeImageList = this.imageListHair;
             this.listViewHair.Location = new System.Drawing.Point(7, 7);
             this.listViewHair.Name = "listViewHair";
             this.listViewHair.Size = new System.Drawing.Size(188, 232);
             this.listViewHair.TabIndex = 0;
             this.listViewHair.UseCompatibleStateImageBehavior = false;
+            this.listViewHair.SelectedIndexChanged += new System.EventHandler(this.listViewHair_SelectedIndexChanged);
             // 
             // imageListHair
             // 
             this.imageListHair.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageListHair.ImageSize = new System.Drawing.Size(120, 80);
+            this.imageListHair.ImageSize = new System.Drawing.Size(120, 120);
             this.imageListHair.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tabMasks__Eye
@@ -322,17 +312,19 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewEye.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
-            this.listViewEye.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
             this.listViewEye.LargeImageList = this.imageListEye;
             this.listViewEye.Location = new System.Drawing.Point(6, 6);
             this.listViewEye.Name = "listViewEye";
             this.listViewEye.Size = new System.Drawing.Size(188, 233);
             this.listViewEye.TabIndex = 1;
             this.listViewEye.UseCompatibleStateImageBehavior = false;
+            this.listViewEye.SelectedIndexChanged += new System.EventHandler(this.listViewEye_SelectedIndexChanged);
+            // 
+            // imageListEye
+            // 
+            this.imageListEye.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageListEye.ImageSize = new System.Drawing.Size(120, 120);
+            this.imageListEye.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tabMasks__Chin
             // 
@@ -351,17 +343,19 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewChin.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
-            this.listViewChin.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
             this.listViewChin.LargeImageList = this.imageListChin;
             this.listViewChin.Location = new System.Drawing.Point(6, 6);
             this.listViewChin.Name = "listViewChin";
             this.listViewChin.Size = new System.Drawing.Size(188, 232);
             this.listViewChin.TabIndex = 2;
             this.listViewChin.UseCompatibleStateImageBehavior = false;
+            this.listViewChin.SelectedIndexChanged += new System.EventHandler(this.listViewChin_SelectedIndexChanged);
+            // 
+            // imageListChin
+            // 
+            this.imageListChin.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageListChin.ImageSize = new System.Drawing.Size(120, 120);
+            this.imageListChin.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // groupBoxCorrection
             // 
@@ -437,18 +431,6 @@
             this.lblCorrectionX.Size = new System.Drawing.Size(84, 13);
             this.lblCorrectionX.TabIndex = 0;
             this.lblCorrectionX.Text = "Горизонтально";
-            // 
-            // imageListEye
-            // 
-            this.imageListEye.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageListEye.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageListEye.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // imageListChin
-            // 
-            this.imageListChin.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageListChin.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageListChin.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // MainForm
             // 

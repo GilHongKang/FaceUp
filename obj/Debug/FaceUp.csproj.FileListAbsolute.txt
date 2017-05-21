@@ -1,9 +1,4 @@
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.AboutForm.resources
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.MainForm.resources
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.Properties.Resources.resources
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.csproj.GenerateResource.Cache
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\FaceUp.exe.config
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.csprojResolveAssemblyReference.cache
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\FaceUp.exe
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\FaceUp.pdb
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\Emgu.CV.DebuggerVisualizers.VS2012.dll
@@ -14,5 +9,9 @@ F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курс
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\Emgu.CV.UI.xml
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\Emgu.CV.UI.GL.xml
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\Emgu.CV.World.xml
+F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.AboutForm.resources
+F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.MainForm.resources
+F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.Properties.Resources.resources
+F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.csproj.GenerateResource.Cache
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.exe
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.pdb
