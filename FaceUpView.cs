@@ -12,6 +12,23 @@ namespace FaceUp
     partial class MainForm
     {
         public bool isCapturing = false;
+        public MaskType activeMaskType
+        {
+            get
+            {
+                switch (tabCtrlMasks.SelectedTab.Text)
+                {
+                    case "Волосы":
+                        return MaskType.HAIR;
+                    case "Глаза":
+                        return MaskType.EYE;
+                    case "Подбородок":
+                        return MaskType.CHIN;
+                    default:
+                        return MaskType.HAIR;
+                }
+            }
+        }
 
         private FaceUpManager mgr = new FaceUpManager();
 
@@ -19,17 +36,17 @@ namespace FaceUp
         {
             if (isCapturing)
             {
-                StartCaptureProcess();
+                StopCaptureProcess();
             }
             else
             {
-                StopCaptureProcess();
+                StartCaptureProcess();
             }
         }
 
         public void StartCaptureProcess ()
         {
-            Application.Idle -= ProcessFrame;
+            Application.Idle += ProcessFrame;
             isCapturing = true;
 
             btnPlayPause.Text = "Пауза";
@@ -38,7 +55,7 @@ namespace FaceUp
 
         public void StopCaptureProcess ()
         {
-            Application.Idle += ProcessFrame;
+            Application.Idle -= ProcessFrame;
             isCapturing = false;
 
             btnPlayPause.Text = "Возобновить";
@@ -54,6 +71,7 @@ namespace FaceUp
             catch ( Exception )
             {
                 MessageBox.Show( "Ошибка подключения веб-камеры" );
+                StopCaptureProcess();
             }
         }
 
