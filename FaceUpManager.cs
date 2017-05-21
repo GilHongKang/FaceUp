@@ -101,6 +101,7 @@ namespace FaceUp
             haarCascade = new CascadeClassifier("haarcascade_frontalface_default.xml");
         }
 
+
         //загрузка картинок
         public bool LoadImages(string applicationPath)
         {
