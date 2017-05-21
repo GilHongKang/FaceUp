@@ -25,10 +25,8 @@ namespace FaceUp
             ToggleCaptureProcess();
         }
 
-        private void playPauseToolStripMenuItem_Click ( object sender, EventArgs e )
-        {
-            ToggleCaptureProcess();
-        }
+        //Обработчики смены вкладок
+
 
         //Обработчики корректировки
         private void trackBarCorrectionSize_Scroll ( object sender, EventArgs e )
@@ -57,6 +55,9 @@ namespace FaceUp
             Application.Exit();
         }
 
-        
+        private void playPauseToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            ToggleCaptureProcess();
+        }
     }
 }
