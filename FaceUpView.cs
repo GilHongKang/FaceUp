@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace FaceUp
 {
@@ -19,17 +21,17 @@ namespace FaceUp
         {
             if (isCapturing)
             {
-                StartCaptureProcess();
+                StopCaptureProcess();
             }
             else
             {
-                StopCaptureProcess();
+                StartCaptureProcess();
             }
         }
 
         public void StartCaptureProcess ()
         {
-            Application.Idle -= ProcessFrame;
+            Application.Idle += ProcessFrame;
             isCapturing = true;
 
             btnPlayPause.Text = "Пауза";
@@ -38,18 +40,21 @@ namespace FaceUp
 
         public void StopCaptureProcess ()
         {
-            Application.Idle += ProcessFrame;
+            Application.Idle -= ProcessFrame;
             isCapturing = false;
 
             btnPlayPause.Text = "Возобновить";
             playPauseToolStripMenuItem.Text = "Возобновить";
         }
 
+        private VideoCapture captureDevice = new VideoCapture(); // web camera
+
         private void ProcessFrame ( object sender, EventArgs arg )
         {
             try
             {
-                captureArea.Image = mgr.DrawProcessedFrame();
+                Image<Bgr, byte> img = captureDevice.QueryFrame().ToImage<Bgr, byte>();
+                captureArea.Image = mgr.DrawProcessedFrame(ref img);
             }
             catch ( Exception )
             {
@@ -68,7 +73,21 @@ namespace FaceUp
                     chinMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.CHIN),
                     hairMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.HAIR);
 
-                for(int i = 0; i < hairMasks.Count; i++)
+                /*
+                var hairMask = hairMasks[0];
+                hairMask.ChangePositionOffsets(-10, 10);
+                hairMask.ChangeSizeOffsets(20, 100);
+                hairMask.GetPositionOffsets();
+                hairMask.GetSizeOffsets();
+                */
+
+                /*
+               // mgr.currentMasks.SetHair(hairMasks[0]);
+                mgr.currentMasks.SetEye(eyeMasks[0]);
+                mgr.currentMasks.SetChin(chinMasks[0]);
+                */
+
+                for (int i = 0; i < hairMasks.Count; i++)
                 {
                     imageListHair.Images.Add(hairMasks[0].source);
                     listViewHair.Items.Add("", i);

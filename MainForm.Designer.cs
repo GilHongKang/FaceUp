@@ -39,14 +39,16 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shotAndSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playPauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playPauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPlayPause = new System.Windows.Forms.Button();
             this.btnShot = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -71,8 +73,6 @@
             this.lblCorrectionX = new System.Windows.Forms.Label();
             this.imageListEye = new System.Windows.Forms.ImageList(this.components);
             this.imageListChin = new System.Windows.Forms.ImageList(this.components);
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.shotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.captureArea)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -129,6 +129,12 @@
             this.openToolStripMenuItem.Text = "Открыть...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
+            // shotToolStripMenuItem
+            // 
+            this.shotToolStripMenuItem.Name = "shotToolStripMenuItem";
+            this.shotToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.shotToolStripMenuItem.Text = "Сделать снимок";
+            // 
             // shotAndSaveToolStripMenuItem
             // 
             this.shotAndSaveToolStripMenuItem.Name = "shotAndSaveToolStripMenuItem";
@@ -159,30 +165,35 @@
             this.serviceToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.serviceToolStripMenuItem.Text = "Сервис";
             // 
+            // playPauseToolStripMenuItem
+            // 
+            this.playPauseToolStripMenuItem.Name = "playPauseToolStripMenuItem";
+            this.playPauseToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.playPauseToolStripMenuItem.Text = "Пауза";
+            this.playPauseToolStripMenuItem.Click += new System.EventHandler(this.playPauseToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
+            // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.settingsToolStripMenuItem1.Text = "Настройки";
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.infoToolStripMenuItem.Text = "Справка";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.aboutToolStripMenuItem.Text = "О программе";
-            // 
-            // playPauseToolStripMenuItem
-            // 
-            this.playPauseToolStripMenuItem.Name = "playPauseToolStripMenuItem";
-            this.playPauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.playPauseToolStripMenuItem.Text = "Пауза";
-            this.playPauseToolStripMenuItem.Click += new System.EventHandler(this.playPauseToolStripMenuItem_Click);
             // 
             // btnPlayPause
             // 
@@ -204,6 +215,7 @@
             this.btnShot.TabIndex = 3;
             this.btnShot.Text = "Сделать снимок";
             this.btnShot.UseVisualStyleBackColor = true;
+            this.btnShot.Click += new System.EventHandler(this.btnShot_Click);
             // 
             // statusStrip
             // 
@@ -314,7 +326,7 @@
             this.listViewEye.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem3,
             listViewItem4});
-            this.listViewEye.LargeImageList = this.imageListHair;
+            this.listViewEye.LargeImageList = this.imageListEye;
             this.listViewEye.Location = new System.Drawing.Point(6, 6);
             this.listViewEye.Name = "listViewEye";
             this.listViewEye.Size = new System.Drawing.Size(188, 233);
@@ -343,7 +355,7 @@
             this.listViewChin.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem5,
             listViewItem6});
-            this.listViewChin.LargeImageList = this.imageListHair;
+            this.listViewChin.LargeImageList = this.imageListChin;
             this.listViewChin.Location = new System.Drawing.Point(6, 6);
             this.listViewChin.Name = "listViewChin";
             this.listViewChin.Size = new System.Drawing.Size(188, 232);
@@ -436,17 +448,6 @@
             this.imageListChin.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageListChin.ImageSize = new System.Drawing.Size(16, 16);
             this.imageListChin.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
-            // 
-            // shotToolStripMenuItem
-            // 
-            this.shotToolStripMenuItem.Name = "shotToolStripMenuItem";
-            this.shotToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
-            this.shotToolStripMenuItem.Text = "Сделать снимок";
             // 
             // MainForm
             // 
