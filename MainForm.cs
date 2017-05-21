@@ -15,7 +15,7 @@ namespace FaceUp
         {
             InitializeComponent();
 
-            LoadMaskImages();
+            LoadMaskImages(Application.StartupPath);
             StartCaptureProcess();
         }
 
@@ -57,6 +57,9 @@ namespace FaceUp
             Application.Exit();
         }
 
-        
+        private void btnShot_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

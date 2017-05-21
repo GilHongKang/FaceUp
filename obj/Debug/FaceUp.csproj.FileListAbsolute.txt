@@ -23,3 +23,20 @@ F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курс
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\Emgu.CV.UI.GL.xml
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Debug\Emgu.CV.World.xml
 F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Debug\FaceUp.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\Source\Repos\FaceUp\obj\Debug\FaceUp.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\Source\Repos\FaceUp\obj\Debug\FaceUp.MainForm.resources
+C:\Users\Владимир\Source\Repos\FaceUp\obj\Debug\FaceUp.Properties.Resources.resources
+C:\Users\Владимир\Source\Repos\FaceUp\obj\Debug\FaceUp.csproj.GenerateResource.Cache
+C:\Users\Владимир\Source\Repos\FaceUp\obj\Debug\FaceUp.exe
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\FaceUp.exe.config
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\FaceUp.exe
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\FaceUp.pdb
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\Emgu.CV.DebuggerVisualizers.VS2012.dll
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\Emgu.CV.UI.dll
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\Emgu.CV.UI.GL.dll
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\Emgu.CV.World.dll
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\ZedGraph.dll
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\Emgu.CV.UI.GL.xml
+C:\Users\Владимир\Source\Repos\FaceUp\bin\Debug\Emgu.CV.World.xml
+C:\Users\Владимир\Source\Repos\FaceUp\obj\Debug\FaceUp.pdb

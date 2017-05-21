@@ -57,32 +57,46 @@ namespace FaceUp
             }
         }
 
-        public void LoadMaskImages ()
+        public void LoadMaskImages (string applicationPath)
         {
-            try 
+            try
             {
-                List<string> hairMasks = mgr.GetMaskPathsOf( "hair" );
-                List<string> eyeMasks = mgr.GetMaskPathsOf( "eye" );
-                List<string> chinMasks = mgr.GetMaskPathsOf( "chin" );
+                if(!mgr.LoadImages(applicationPath))
+                    throw new Exception("Images not found");
 
-                foreach (var mask in hairMasks)
+                List<FaceUpManager.Picture> eyeMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.EYE),
+                    chinMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.CHIN),
+                    hairMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.HAIR);
+
+                for(int i = 0; i < hairMasks.Count; i++)
                 {
-                    //заполнение листа
+                    imageListHair.Images.Add(hairMasks[0].source);
+                    listViewHair.Items.Add("", i);
                 }
 
-                foreach (var mask in eyeMasks)
+                for (int i = 0; i < eyeMasks.Count; i++)
                 {
-                    //заполнение листа
+                    imageListEye.Images.Add(eyeMasks[i].source);
+                    listViewEye.Items.Add("", i);
                 }
 
-                foreach (var mask in chinMasks)
+                for (int i = 0; i < chinMasks.Count; i++)
                 {
-                    //заполнение листа
+                    imageListChin.Images.Add(chinMasks[i].source);
+                    listViewChin.Items.Add("", i);
                 }
+
+                /*
+                 * размер картинок можно поменять так, больше способов не знаю
+                imageListChin.ImageSize = new Size(100,100);
+                imageListEye.ImageSize = new Size(100, 100);
+                imageListHair.ImageSize = new Size(100, 100);
+                */
+               
             }
-            catch ( Exception )
+            catch (Exception)
             {
-                MessageBox.Show( "Ошибка загрузки масок" );
+                MessageBox.Show("Ошибка загрузки масок");
             }
         }
     }
