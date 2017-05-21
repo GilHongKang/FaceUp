@@ -31,6 +31,8 @@ namespace FaceUp
         //Обработчики корректировки
         private void trackBarCorrectionSize_Scroll ( object sender, EventArgs e )
         {
+            //MessageBox.Show( activeMaskType.ToString() );
+            //mgr.ChangeSize( activeMaskType, trackBarCorrectionSize.Value );
 
         }
 
@@ -59,5 +61,13 @@ namespace FaceUp
         {
             ToggleCaptureProcess();
         }
+
+        private void aboutToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            AboutForm aboutForm = new AboutForm();
+            aboutForm.Show();
+        }
+
+
     }
 }

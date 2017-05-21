@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FaceUp
 {
-    enum MaskType
+    public enum MaskType
     {
         HAIR,
         EYE,
