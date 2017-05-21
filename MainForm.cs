@@ -16,7 +16,7 @@ namespace FaceUp
         {
             InitializeComponent();
 
-            LoadMaskImages(Application.StartupPath);
+            LoadMaskImages( Application.StartupPath );
             StartCaptureProcess();
         }
 
@@ -32,8 +32,7 @@ namespace FaceUp
         //Обработчики корректировки
         private void trackBarCorrectionSize_Scroll ( object sender, EventArgs e )
         {
-            //MessageBox.Show( activeMaskType.ToString() );
-            //mgr.ChangeSize( activeMaskType, trackBarCorrectionSize.Value );
+            
 
         }
 

@@ -71,25 +71,25 @@ namespace FaceUp
             try
             {
                 Image<Bgr, byte> img = captureDevice.QueryFrame().ToImage<Bgr, byte>();
-                captureArea.Image = mgr.DrawProcessedFrame(ref img);
+                captureArea.Image = mgr.DrawProcessedFrame( ref img );
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 MessageBox.Show( "Ошибка подключения веб-камеры" );
                 StopCaptureProcess();
             }
         }
 
-        public void LoadMaskImages (string applicationPath)
+        public void LoadMaskImages ( string applicationPath )
         {
             try
             {
-                if(!mgr.LoadImages(applicationPath))
-                    throw new Exception("Images not found");
+                if (!mgr.LoadImages( applicationPath ))
+                    throw new Exception( "Images not found" );
 
-                List<FaceUpManager.Picture> eyeMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.EYE),
-                    chinMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.CHIN),
-                    hairMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.HAIR);
+                List<FaceUpManager.Picture> eyeMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.EYE ),
+                    chinMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.CHIN ),
+                    hairMasks = mgr.GetMaskImagesOf( FaceUpManager.MaskType.HAIR );
 
                 /*
                 var hairMask = hairMasks[0];
@@ -107,20 +107,20 @@ namespace FaceUp
 
                 for (int i = 0; i < hairMasks.Count; i++)
                 {
-                    imageListHair.Images.Add(hairMasks[0].source);
-                    listViewHair.Items.Add("", i);
+                    imageListHair.Images.Add( hairMasks[0].source );
+                    listViewHair.Items.Add( "", i );
                 }
 
                 for (int i = 0; i < eyeMasks.Count; i++)
                 {
-                    imageListEye.Images.Add(eyeMasks[i].source);
-                    listViewEye.Items.Add("", i);
+                    imageListEye.Images.Add( eyeMasks[i].source );
+                    listViewEye.Items.Add( "", i );
                 }
 
                 for (int i = 0; i < chinMasks.Count; i++)
                 {
-                    imageListChin.Images.Add(chinMasks[i].source);
-                    listViewChin.Items.Add("", i);
+                    imageListChin.Images.Add( chinMasks[i].source );
+                    listViewChin.Items.Add( "", i );
                 }
 
                 /*
@@ -129,13 +129,25 @@ namespace FaceUp
                 imageListEye.ImageSize = new Size(100, 100);
                 imageListHair.ImageSize = new Size(100, 100);
                 */
-               
+
             }
             catch (Exception)
             {
-                MessageBox.Show("Ошибка загрузки масок");
+                MessageBox.Show( "Ошибка загрузки масок" );
             }
         }
+
+        //private void InitializeComponent ()
+        //{
+        //    this.SuspendLayout();
+        //    // 
+        //    // MainForm
+        //    // 
+        //    this.ClientSize = new System.Drawing.Size(284, 261);
+        //    this.Name = "MainForm";
+        //    this.ResumeLayout(false);
+
+        //}
     }
 
 }

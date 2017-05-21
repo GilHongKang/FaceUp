@@ -1,8 +1,0 @@
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Release\FaceUp.exe.config
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Release\FaceUp.exe
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\bin\Release\FaceUp.pdb
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Release\FaceUp.MainForm.resources
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Release\FaceUp.Properties.Resources.resources
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Release\FaceUp.csproj.GenerateResource.Cache
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Release\FaceUp.exe
-F:\YandexDisk\YandexDisk\Колледж\3 курс\Нецветаева\Курсовой проект\project\FaceUp\FaceUp\obj\Release\FaceUp.pdb
