@@ -163,31 +163,31 @@
             // playPauseToolStripMenuItem
             // 
             this.playPauseToolStripMenuItem.Name = "playPauseToolStripMenuItem";
-            this.playPauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playPauseToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.playPauseToolStripMenuItem.Text = "Пауза";
             this.playPauseToolStripMenuItem.Click += new System.EventHandler(this.playPauseToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.settingsToolStripMenuItem1.Text = "Настройки";
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.infoToolStripMenuItem.Text = "Справка";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.aboutToolStripMenuItem.Text = "О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -376,11 +376,11 @@
             // trackBarCorrectionSize
             // 
             this.trackBarCorrectionSize.Location = new System.Drawing.Point(6, 38);
-            this.trackBarCorrectionSize.Maximum = 16;
+            this.trackBarCorrectionSize.Maximum = 24;
             this.trackBarCorrectionSize.Name = "trackBarCorrectionSize";
             this.trackBarCorrectionSize.Size = new System.Drawing.Size(193, 45);
             this.trackBarCorrectionSize.TabIndex = 5;
-            this.trackBarCorrectionSize.Value = 8;
+            this.trackBarCorrectionSize.Value = 12;
             this.trackBarCorrectionSize.Scroll += new System.EventHandler(this.trackBarCorrectionSize_Scroll);
             // 
             // lblCorrectionSize
@@ -404,23 +404,23 @@
             // trackBarCorrectionY
             // 
             this.trackBarCorrectionY.Location = new System.Drawing.Point(6, 139);
-            this.trackBarCorrectionY.Maximum = 12;
+            this.trackBarCorrectionY.Maximum = 24;
             this.trackBarCorrectionY.Name = "trackBarCorrectionY";
             this.trackBarCorrectionY.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBarCorrectionY.Size = new System.Drawing.Size(45, 117);
-            this.trackBarCorrectionY.TabIndex = 2;
+            this.trackBarCorrectionY.TabIndex = 1;
             this.trackBarCorrectionY.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarCorrectionY.Value = 6;
+            this.trackBarCorrectionY.Value = 12;
             this.trackBarCorrectionY.Scroll += new System.EventHandler(this.trackBarCorrectionY_Scroll);
             // 
             // trackBarCorrectionX
             // 
             this.trackBarCorrectionX.Location = new System.Drawing.Point(6, 106);
-            this.trackBarCorrectionX.Maximum = 16;
+            this.trackBarCorrectionX.Maximum = 24;
             this.trackBarCorrectionX.Name = "trackBarCorrectionX";
             this.trackBarCorrectionX.Size = new System.Drawing.Size(193, 45);
             this.trackBarCorrectionX.TabIndex = 1;
-            this.trackBarCorrectionX.Value = 8;
+            this.trackBarCorrectionX.Value = 12;
             this.trackBarCorrectionX.Scroll += new System.EventHandler(this.trackBarCorrectionX_Scroll);
             // 
             // lblCorrectionX

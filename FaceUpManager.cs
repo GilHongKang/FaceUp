@@ -72,9 +72,9 @@ namespace FaceUp
 
         public struct CurrentMasks
         {
-            private Picture hair;
-            private Picture eye;
-            private Picture chin;
+            public Picture hair;
+            public Picture eye;
+            public Picture chin;
 
             public CurrentMasks ( Picture hair, Picture eye, Picture chin )
             {
@@ -87,9 +87,9 @@ namespace FaceUp
             public void SetEye ( Picture eye ) { this.eye = eye; }
             public void SetChin ( Picture chin ) { this.chin = chin; }
 
-            public Picture GetHair () { return this.hair; }
-            public Picture GetEye () { return this.eye; }
-            public Picture GetChin () { return this.chin; }
+            public  Picture GetHair () { return  hair; }
+            public  Picture GetEye () { return this.eye; }
+            public  Picture GetChin () { return this.chin; }
         }
 
         public FaceUpManager ()
@@ -167,6 +167,22 @@ namespace FaceUp
 
             foreach (var face in faces)
             {
+
+                if (eyeMask.source != null)
+                    g.DrawImage(
+                    new Bitmap(
+                            Bitmap.FromFile(eyeMask.path),
+                            new Size(
+                                     face.Width + eyeMask.GetSizeOffsets().Width,
+                                     face.Height + eyeMask.GetSizeOffsets().Height)
+                            ),
+                    new Point(
+                              face.X + eyeMask.GetPositionOffsets().X,
+                              face.Y + eyeMask.GetPositionOffsets().Y
+                    )
+                );
+
+
                 if (hairMask.source != null)
                     g.DrawImage(
                         new Bitmap(
@@ -179,21 +195,7 @@ namespace FaceUp
                             face.X + hairMask.GetPositionOffsets().X, face.Y + hairMask.GetPositionOffsets().Y
                         )
                     );
-
-                if (eyeMask.source != null)
-                    g.DrawImage(
-                    new Bitmap(
-                            Bitmap.FromFile( eyeMask.path ),
-                            new Size(
-                                     face.Width + eyeMask.GetSizeOffsets().Width,
-                                     face.Height + eyeMask.GetSizeOffsets().Height )
-                            ),
-                    new Point(
-                              face.X + eyeMask.GetPositionOffsets().X,
-                              face.Y + eyeMask.GetPositionOffsets().Y
-                    )
-                );
-
+                
                 if (chinMasks.source != null)
                     g.DrawImage(
                             new Bitmap(

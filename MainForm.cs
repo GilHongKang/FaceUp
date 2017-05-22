@@ -42,7 +42,7 @@ namespace FaceUp
 
         private void trackBarCorrectionY_Scroll ( object sender, EventArgs e )
         {
-            CorrectMaskX( activeMaskType, trackBarCorrectionY.Value );
+            CorrectMaskY( activeMaskType, trackBarCorrectionY.Value );
         }
 
         //Обработчики меню
