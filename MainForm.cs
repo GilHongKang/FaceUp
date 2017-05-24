@@ -11,12 +11,15 @@ namespace FaceUp
 {
     public partial class MainForm : Form
     {
+        private SettingsForm settingsForm = new SettingsForm();
 
         public MainForm ()
         {
             InitializeComponent();
 
-            LoadMaskImages( Application.StartupPath );
+            settingsForm.Owner = this;
+            settingsForm.SetupSettings();
+            LoadMaskImages();
             StartCaptureProcess();
         }
 
@@ -26,29 +29,57 @@ namespace FaceUp
             ToggleCaptureProcess();
         }
 
-        //Обработчики смены вкладок
+        private void btnShot_Click ( object sender, EventArgs e )
+        {
+            SaveImage();
+        }
 
+        private void btnOpenOutputDir_Click ( object sender, EventArgs e )
+        {
+            OpenOutputDir();
+        }
+
+        private void btnClearMasks_Click ( object sender, EventArgs e )
+        {
+            ClearMask( ActiveMaskType );
+        }
+
+        //Обработчики смены вкладок
+        private void tabCtrlMasks_Selecting ( object sender, TabControlCancelEventArgs e )
+        {
+            UpdateValues();
+        }
 
         //Обработчики корректировки
         private void trackBarCorrectionSize_Scroll ( object sender, EventArgs e )
         {
-            CorrectMaskSize( activeMaskType, trackBarCorrectionSize.Value );
+            CorrectMaskScale( trackBarCorrectionSize.Value - 10 );
         }
 
         private void trackBarCorrectionX_Scroll ( object sender, EventArgs e )
         {
-            CorrectMaskX( activeMaskType, trackBarCorrectionX.Value );
+            CorrectMaskX( trackBarCorrectionX.Value - 10 );
         }
 
         private void trackBarCorrectionY_Scroll ( object sender, EventArgs e )
         {
-            CorrectMaskY( activeMaskType, trackBarCorrectionY.Value );
+            CorrectMaskY( trackBarCorrectionY.Value - 8 );
         }
 
         //Обработчики меню
-        private void openToolStripMenuItem_Click ( object sender, EventArgs e )
+        private void openDirToolStripMenuItem_Click ( object sender, EventArgs e )
         {
+            OpenOutputDir();
+        }
 
+        private void shotToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            SaveImage();
+        }
+
+        private void shotAndSaveToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            SaveImage( true );
         }
 
         private void exitToolStripMenuItem_Click ( object sender, EventArgs e )
@@ -61,27 +92,42 @@ namespace FaceUp
             ToggleCaptureProcess();
         }
 
+        private void settingsToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            settingsForm.Show();
+        }
+
         private void aboutToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             AboutForm aboutForm = new AboutForm();
             aboutForm.Show();
         }
 
+        //Обработчики выбора масок
         private void listViewHair_SelectedIndexChanged ( object sender, EventArgs e )
         {
-            SelectMask( MaskType.HAIR );
+            SelectMask( listViewHair );
         }
 
         private void listViewEye_SelectedIndexChanged ( object sender, EventArgs e )
         {
-            SelectMask( MaskType.EYE );
+            SelectMask( listViewEye );
         }
 
         private void listViewChin_SelectedIndexChanged ( object sender, EventArgs e )
         {
-            SelectMask( MaskType.CHIN );
+            SelectMask( listViewChin );
         }
 
+        //Таймер покадровый (~30 кадров/сек)
+        private void timer_Tick ( object sender, EventArgs e )
+        {
+            ProcessFrame();
+        }
 
+        private void helpToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            System.Diagnostics.Process.Start( Application.StartupPath + @"\help.chm" );
+        }
     }
 }

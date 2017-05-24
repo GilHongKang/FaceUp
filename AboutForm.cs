@@ -21,5 +21,10 @@ namespace FaceUp
         {
             System.Diagnostics.Process.Start( "https://opensource.org/licenses/mit-license.php" );
         }
+
+        private void btnExit_Click ( object sender, EventArgs e )
+        {
+            this.Close();
+        }
     }
 }

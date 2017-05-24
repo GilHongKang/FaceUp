@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
-using Emgu.CV;
-using Emgu.CV.Structure;
+using System.Diagnostics;
+using System.IO;
 
 namespace FaceUp
 {
     //Фронтенд
     partial class MainForm
     {
-        public bool isCapturing = false;
-        public ListViewItem activeMaskItem;
-
-        public MaskType activeMaskType
+        private bool IsWebcamConnected = false;
+        public bool IsCapturing = false;
+        public ListViewItem ActiveMaskItem;
+        public MaskType ActiveMaskType
         {
             get
             {
@@ -34,14 +34,11 @@ namespace FaceUp
             }
         }
 
-        private FaceUpManager mgr = new FaceUpManager();
-        private List<FaceUpManager.Picture> hairMasks;
-        private List<FaceUpManager.Picture> eyeMasks;
-        private List<FaceUpManager.Picture> chinMasks;
+        private FaceUpManager Mgr = new FaceUpManager();
 
         public void ToggleCaptureProcess()
         {
-            if (isCapturing)
+            if (IsCapturing)
             {
                 StopCaptureProcess();
             }
@@ -53,8 +50,8 @@ namespace FaceUp
 
         public void StartCaptureProcess()
         {
-            Application.Idle += ProcessFrame;
-            isCapturing = true;
+            timer.Start();
+            IsCapturing = true;
 
             btnPlayPause.Text = "Пауза";
             playPauseToolStripMenuItem.Text = "Пауза";
@@ -62,207 +59,216 @@ namespace FaceUp
 
         public void StopCaptureProcess()
         {
-            Application.Idle -= ProcessFrame;
-            isCapturing = false;
+            timer.Stop();
+            IsCapturing = false;
 
             btnPlayPause.Text = "Возобновить";
             playPauseToolStripMenuItem.Text = "Возобновить";
         }
 
-        private void ProcessFrame(object sender, EventArgs arg)
+        private void ProcessFrame ()
         {
             try
             {
-                captureArea.Image = mgr.DrawProcessedFrame();
+                captureArea.Image = Mgr.DrawProcessedFrame();
+                statusStrip__PeopleAmount.Text = "Людей на снимке: " + Mgr.FacesAmount;
+                IsWebcamConnected = true;
             }
-            catch (Exception)
+            catch
             {
-                MessageBox.Show("Ошибка подключения веб-камеры");
                 StopCaptureProcess();
+                IsWebcamConnected = false;
+                MessageBox.Show( "Ошибка подключения веб-камеры" );
             }
         }
 
-        public void LoadMaskImages(string applicationPath)
+        public void LoadMaskImages()
+        {
+            LoadMaskImages( MaskType.HAIR, listViewHair );
+            LoadMaskImages( MaskType.EYE, listViewEye );
+            LoadMaskImages( MaskType.CHIN, listViewChin );
+        }
+
+        public void LoadMaskImages ( MaskType type, ListView listView ) 
+        {
+            string[] imgPaths = Mgr.LoadMasks( type, Application.StartupPath );
+            foreach (string imgPath in imgPaths)
+            {
+                ListViewItem item = new ListViewItem();
+                listView.LargeImageList.Images.Add( Bitmap.FromFile( imgPath ) );
+                item.ImageIndex = listView.LargeImageList.Images.Count - 1;
+                listView.Items.Add( item );
+
+                Mgr.AddMask( new Mask( type, imgPath ), item.ImageIndex );
+            }
+        }
+
+        public void SelectMask( ListView listView )
         {
             try
             {
-                if (!mgr.LoadImages(applicationPath)) throw new Exception("Изображения не найдены");
-
-                eyeMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.EYE);
-                chinMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.CHIN);
-                hairMasks = mgr.GetMaskImagesOf(FaceUpManager.MaskType.HAIR);
-
-                hairMasks.Select(image => new { image.source, image.id })
-                    .ToList().ForEach(obj =>
-                   {
-                       ListViewItem item = new ListViewItem();
-                       item.Tag = obj.id;
-                       imageListHair.Images.Add(obj.source);
-                       item.ImageIndex = imageListHair.Images.Count - 1;
-                       listViewHair.Items.Add(item);
-                   });
-
-                eyeMasks.Select(image => new { image.source, image.id })
-                    .ToList().ForEach(obj =>
-                   {
-                       ListViewItem item = new ListViewItem();
-                       item.Tag = obj.id;
-                       imageListEye.Images.Add(obj.source);
-                       item.ImageIndex = imageListEye.Images.Count - 1;
-                       listViewEye.Items.Add(item);
-                   });
-
-                chinMasks.Select(image => new { image.source, image.id })
-                    .ToList().ForEach(obj =>
-                   {
-                       ListViewItem item = new ListViewItem();
-                       item.Tag = obj.id;
-                       imageListChin.Images.Add(obj.source);
-                       item.ImageIndex = imageListChin.Images.Count - 1;
-                       listViewChin.Items.Add(item);
-                   });
+                ActiveMaskItem = listView.SelectedItems[0];
+                Mgr.SelectMask( ActiveMaskType, ActiveMaskItem.ImageIndex );
+                UpdateValues();
             }
-            catch (Exception)
+            catch (Exception) { }
+        }
+
+        public void UpdateValues () 
+        {
+            Mask selectedMask;
+
+            switch (ActiveMaskType)
             {
-                MessageBox.Show("Ошибка загрузки масок");
+                case MaskType.HAIR:
+                    selectedMask = Mgr.SelectedHairMask;
+                    break;
+                case MaskType.EYE:
+                    selectedMask = Mgr.SelectedEyeMask;
+                    break;
+                case MaskType.CHIN:
+                    selectedMask = Mgr.SelectedChinMask;
+                    break;
+                default:
+                    return;
+            }
+
+            trackBarCorrectionSize.Value = selectedMask.TrackBarScale;
+            trackBarCorrectionX.Value = selectedMask.TrackBarOffsetX;
+            trackBarCorrectionY.Value = selectedMask.TrackBarOffsetY;
+
+            statusStrip__PeopleAmount.Text = "Людей на снимке: " + Mgr.FacesAmount;
+            statusStrip__CorrectionSize.Text = "Размер: " + selectedMask.Scale + "%";
+            statusStrip__CorrectionX.Text = "Корректировка по оси X: " + selectedMask.OffsetX;
+            statusStrip__CorrectionY.Text = "Корректировка по оси Y: " + selectedMask.OffsetY;
+        }
+
+        public void CorrectMaskScale( int scale )
+        {
+            switch (ActiveMaskType)
+            {
+                case MaskType.HAIR:
+                    Mgr.SelectedHairMask.ChangeScale( scale * 5 );
+                    Mgr.SelectedHairMask.TrackBarScale = trackBarCorrectionSize.Value;
+                    break;
+                case MaskType.EYE:
+                    Mgr.SelectedEyeMask.ChangeScale( scale * 5 );
+                    Mgr.SelectedEyeMask.TrackBarScale = trackBarCorrectionSize.Value;
+                    break;
+                case MaskType.CHIN:
+                    Mgr.SelectedChinMask.ChangeScale( scale * 5 );
+                    Mgr.SelectedChinMask.TrackBarScale = trackBarCorrectionSize.Value;
+                    break;
+            }
+
+            statusStrip__CorrectionSize.Text = "Размер: " + (100 + (scale * 5)) + "%";
+        }
+
+        public void CorrectMaskX( int offsetX )
+        {
+            switch (ActiveMaskType)
+            {
+                case MaskType.HAIR:
+                    Mgr.SelectedHairMask.OffsetX = offsetX * 3;
+                    Mgr.SelectedHairMask.TrackBarOffsetX = trackBarCorrectionX.Value;
+                    break;
+                case MaskType.EYE:
+                    Mgr.SelectedEyeMask.OffsetX = offsetX * 3;
+                    Mgr.SelectedEyeMask.TrackBarOffsetX = trackBarCorrectionX.Value;
+                    break;
+                case MaskType.CHIN:
+                    Mgr.SelectedChinMask.OffsetX = offsetX * 3;
+                    Mgr.SelectedChinMask.TrackBarOffsetX = trackBarCorrectionX.Value;
+                    break;
+            }
+
+            statusStrip__CorrectionX.Text = "Корректировка по оси X: " + offsetX;
+        }
+
+        public void CorrectMaskY( int offsetY )
+        {
+            switch (ActiveMaskType)
+            {
+                case MaskType.HAIR:
+                    Mgr.SelectedHairMask.OffsetY = offsetY * 3;
+                    Mgr.SelectedHairMask.TrackBarOffsetY = trackBarCorrectionY.Value;
+                    break;
+                case MaskType.EYE:
+                    Mgr.SelectedEyeMask.OffsetY = offsetY * 3;
+                    Mgr.SelectedEyeMask.TrackBarOffsetY = trackBarCorrectionY.Value;
+                    break;
+                case MaskType.CHIN:
+                    Mgr.SelectedChinMask.OffsetY = offsetY * 3;
+                    Mgr.SelectedEyeMask.TrackBarOffsetY = trackBarCorrectionY.Value;
+                    break;
+            }
+
+            statusStrip__CorrectionY.Text = "Корректировка по оси Y: " + offsetY;
+        }
+
+        public void ClearMask ( MaskType type ) 
+        {
+            switch (type)
+            {
+                case MaskType.HAIR:
+                    Mgr.SelectedHairMask = new Mask( MaskType.HAIR );
+                    break;
+                case MaskType.EYE:
+                    Mgr.SelectedEyeMask = new Mask( MaskType.EYE );
+                    break;
+                case MaskType.CHIN:
+                    Mgr.SelectedChinMask = new Mask( MaskType.CHIN );
+                    break;
             }
         }
 
-        public void SelectMask(MaskType maskType)
+        public void SaveImage ( bool showDialog = false )
         {
-            try
+            if (IsWebcamConnected) 
             {
-                switch (maskType)
+                if (showDialog)
                 {
-                    case MaskType.HAIR:
-                        activeMaskItem = listViewHair.SelectedItems[0];
-                        break;
-                    case MaskType.EYE:
-                        activeMaskItem = listViewEye.SelectedItems[0];
-                        break;
-                    case MaskType.CHIN:
-                        activeMaskItem = listViewChin.SelectedItems[0];
-                        break;
-                    default:
+                    StopCaptureProcess();
+
+                    if (saveImageDialog.ShowDialog() == DialogResult.Cancel)
+                    {
+                        StartCaptureProcess();
                         return;
+                    }
+                    else
+                    {
+                        string path = saveImageDialog.FileName;
+                        try
+                        {
+                            Mgr.CapturedBmp.Save( saveImageDialog.FileName );
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show( ex.Message );
+                        }
+                    }
                 }
-
-                int id = int.Parse(activeMaskItem.Tag.ToString());
-
-                FaceUpManager.Picture picture = mgr.GetMaskById(id);
-
-                switch (maskType)
+                else
                 {
-                    case MaskType.HAIR:
-                        mgr.currentMasks.SetHair(picture);
-                        break;
-                    case MaskType.EYE:
-                        mgr.currentMasks.SetEye(picture);
-                        break;
-                    case MaskType.CHIN:
-                        mgr.currentMasks.SetChin(picture);
-                        break;
-                    default:
-                        return;
+                    try
+                    {
+                        if (!Directory.Exists( settingsForm.OutputDir ))
+                        {
+                            Directory.CreateDirectory( settingsForm.OutputDir );
+                        }
+                        Mgr.CapturedBmp.Save( settingsForm.OutputDir + @"\FaceUp_" + DateTime.Now.ToFileTime().ToString() + ".jpg" );
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show( ex.Message );
+                    }
                 }
             }
-            catch (Exception ex) { }
-
         }
 
-        public void CorrectMaskSize(MaskType maskType, int size)
+        public void OpenOutputDir () 
         {
-            switch (maskType)
-            {
-                case MaskType.HAIR:
-                    {
-                        var hairSize = mgr.currentMasks.hair.GetSizeOffsets();
-                        mgr.currentMasks.hair.ChangeSizeOffsets(120 + ((size - 12) * 20), 120 + ((size - 12) * 20));
-                    }
-                    break;
-                case MaskType.EYE:
-                    {
-                        var eyeSize = mgr.currentMasks.eye.GetSizeOffsets();
-                        mgr.currentMasks.eye.ChangeSizeOffsets(120 + ((size - 12) * 20), 120 + ((size - 12) * 20));
-                    }
-                    break;
-                case MaskType.CHIN:
-                    {
-                        var chinSize = mgr.currentMasks.chin.GetSizeOffsets();
-                        mgr.currentMasks.chin.ChangeSizeOffsets(120 + ((size - 12) * 20), 120 + ((size - 12) * 20));
-                    }
-                    break;
-            }
-        }
-
-        public void CorrectMaskX(MaskType maskType, int offsetX)
-        {
-
-            statusStrip__CorrectionX.Text = "Корректировка по оси X: " + ((offsetX - 12) * 30).ToString();
-
-            switch (maskType)
-            {
-                case MaskType.HAIR:
-                    {
-                        var hairSize = mgr.currentMasks.hair.GetPositionOffsets();
-                        mgr.currentMasks.hair.ChangePositionOffsets((offsetX - 12) * 30, hairSize.Y);
-                    }
-                    break;
-                case MaskType.EYE:
-                    {
-                        var eyeSize = mgr.currentMasks.eye.GetPositionOffsets();
-                        mgr.currentMasks.eye.ChangePositionOffsets(((offsetX - 12) * 30), eyeSize.Y);
-                    }
-                    break;
-                case MaskType.CHIN:
-                    {
-                        var chinSize = mgr.currentMasks.chin.GetPositionOffsets();
-                        mgr.currentMasks.chin.ChangePositionOffsets(((offsetX - 12) * 30), chinSize.Y);
-                    }
-                    break;
-            }
-            /*
-            var hairMask = hairMasks[0];
-            hairMask.ChangePositionOffsets(-10, 10);
-            hairMask.ChangeSizeOffsets(20, 100);
-            hairMask.GetPositionOffsets();
-            hairMask.GetSizeOffsets();
-            */
-
-            /*
-            размер картинок можно поменять так, больше способов не знаю
-            imageListChin.ImageSize = new Size(100,100);
-            imageListEye.ImageSize = new Size(100, 100);
-            imageListHair.ImageSize = new Size(100, 100);
-            */
-        }
-
-        public void CorrectMaskY(MaskType maskType, int offsetY)
-        {
-
-            statusStrip__CorrectionY.Text = "Корректировка по оси Y: " + ((offsetY - 12) * 30).ToString();
-
-            switch (maskType)
-            {
-                case MaskType.HAIR:
-                    {
-                        var hairSize = mgr.currentMasks.hair.GetPositionOffsets();
-                        mgr.currentMasks.hair.ChangePositionOffsets(hairSize.X, ((offsetY - 12) * 30));
-                    }
-                    break;
-                case MaskType.EYE:
-                    {
-                        var eyeSize = mgr.currentMasks.eye.GetPositionOffsets();
-                        mgr.currentMasks.eye.ChangePositionOffsets(eyeSize.X, ((offsetY - 12) * 30));
-                    }
-                    break;
-                case MaskType.CHIN:
-                    {
-                        var chinSize = mgr.currentMasks.chin.GetPositionOffsets();
-                        mgr.currentMasks.chin.ChangePositionOffsets(chinSize.X, ((offsetY - 12) * 30));
-                    }
-                    break;
-            }
+            Process.Start( "explorer.exe", settingsForm.OutputDir );
         }
     }
 
